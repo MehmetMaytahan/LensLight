@@ -9,6 +9,12 @@ const getAboutPage = (req, res) => {
     })
 }
 
+const getPhotosPage = (req,res) =>{
+    res.render('photos',{
+        link:'photos'
+    })
+}
+
 export {
-    getHomePage, getAboutPage
+    getHomePage, getAboutPage, getPhotosPage
 }
