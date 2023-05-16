@@ -6,4 +6,6 @@ router
     .post('/', photoController.createPhoto)
     .get('/', photoController.getAllPhotos)
 
+router.get('/:id', photoController.getAPhoto)
+
 export default router;
