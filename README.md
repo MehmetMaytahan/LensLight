@@ -3,3 +3,4 @@
     - Template Engine -> (EJS)
     - Database -> (MongoDB)
     - Node.js Framework -> (Express.js)
+    - Bcrypt modülü -> (Node.js)

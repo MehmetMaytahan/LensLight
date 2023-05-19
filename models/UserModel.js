@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from 'bcrypt'
 
 const { Schema } = mongoose;
 
@@ -19,6 +20,17 @@ const UserSchema = new Schema({
     }
 }, {
     timestamps: true
+})
+
+UserSchema.pre("save", function () {
+    const user = this
+
+    !user.isModified('password')
+        ? next()
+        : bcrypt.hash(user.password, 10, (err, hash) => {
+            user.password = hash
+            next()
+        })
 })
 
 const User = mongoose.model('User', UserSchema)
