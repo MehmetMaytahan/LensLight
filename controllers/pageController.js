@@ -9,12 +9,18 @@ const getAboutPage = (req, res) => {
     })
 }
 
-const getPhotosPage = (req,res) =>{
-    res.render('photos',{
-        link:'photos'
+const getPhotosPage = (req, res) => {
+    res.render('photos', {
+        link: 'photos'
+    })
+}
+
+const getRegisterPage = (req, res) => {
+    res.render('register', {
+        link: 'register'
     })
 }
 
 export {
-    getHomePage, getAboutPage, getPhotosPage
+    getHomePage, getAboutPage, getPhotosPage, getRegisterPage 
 }
