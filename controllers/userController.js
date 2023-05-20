@@ -1,5 +1,6 @@
 import User from '../models/UserModel.js'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 const createUser = async (req, res) => {
     try {
@@ -30,7 +31,10 @@ const loginUser = async (req, res) => {
             })
 
         same
-            ? res.status(200).redirect('/')
+            ? res.status(200).json({
+                user,
+                jwtToken: createToken(user._id)
+            })
             : res.status(401).json({
                 succeded: false,
                 error: "Passwords are not matched"
@@ -42,6 +46,12 @@ const loginUser = async (req, res) => {
             error
         })
     }
+}
+
+const createToken = (userId) => {
+    return jwt.sign({ userId }, process.env.JWT_SECRET, {
+        expiresIn: '1d'
+    })
 }
 
 export {
