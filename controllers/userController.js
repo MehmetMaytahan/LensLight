@@ -31,10 +31,12 @@ const loginUser = async (req, res) => {
             })
 
         same
-            ? res.status(200).json({
+            ?
+            res.status(200).json({
                 user,
                 jwtToken: createToken(user._id)
             })
+
             : res.status(401).json({
                 succeded: false,
                 error: "Passwords are not matched"
