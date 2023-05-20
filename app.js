@@ -28,5 +28,5 @@ app.use('/users', userRoute)
 
 
 app.listen(process.env.PORT | 3000, () => {
-    console.log(`Listenin on port : ${process.env.PORT | 3000}`);
+    console.log(`Listenin on port : http://localhost:${process.env.PORT | 3000}`);
 })

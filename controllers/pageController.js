@@ -21,6 +21,12 @@ const getRegisterPage = (req, res) => {
     })
 }
 
+const getLoginPage = (req, res) => {
+    res.render('login', {
+        link: 'login'
+    })
+}
+
 export {
-    getHomePage, getAboutPage, getPhotosPage, getRegisterPage 
+    getHomePage, getAboutPage, getPhotosPage, getRegisterPage, getLoginPage
 }
