@@ -5,9 +5,7 @@ import jwt from 'jsonwebtoken'
 const createUser = async (req, res) => {
     try {
         const user = await User.create(req.body)
-        res.status(201).render('login', {
-            link: 'login'
-        })
+        res.status(201).redirect('/login')
     } catch (error) {
         res.status(500).json({
             succeded: false,
@@ -36,7 +34,6 @@ const loginUser = async (req, res) => {
                 httpOnly: true, // http isteklerinde bulunulabilmesi için true veriyoruz
                 maxAge: 1000 * 60 * 60 * 24 // token'ın ne kadar süre erişilebilir olacak onu ayarladık
             })
-            console.log(token);
             res.status(200).redirect('/users/dashboard')
 
         } else {
