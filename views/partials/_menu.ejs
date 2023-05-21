@@ -28,7 +28,7 @@
          <div class=" col-md-4 di_none">
             <ul class="email text_align_right">
                <% if(user) { %>
-                  <li><a class="<%= link == 'logout' && 'active' %>" href="/users/logout">Exit</a></li>
+                  <li><a class="<%= link == 'logout' && 'active' %>" href="/logout">Exit</a></li>
                   <% } else { %>
                      <li><a class="<%= link == 'register' && 'active' %>" href="/register">Register</a></li>
                      <li><a class="<%= link == 'login' && 'active' %>" href="/login">Login</a></li>
