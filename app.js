@@ -6,6 +6,7 @@ import { conn } from './db.js'
 import pageRoute from './routes/pageRoute.js'
 import photoRoute from './routes/photoRoute.js'
 import userRoute from './routes/userRoute.js'
+import { checkUser } from './middlewares/authMiddleware.js'
 
 dotenv.config()
 
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true })) // form icindeki verileri parse 
 app.use(cookieParser())
 
 // Routes
+app.get('*', checkUser)
 app.use('/', pageRoute)
 app.use('/photos', photoRoute)
 app.use('/users', userRoute)

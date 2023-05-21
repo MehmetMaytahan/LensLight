@@ -21,6 +21,19 @@ const authenticateToken = async (req, res, next) => {
     }
 }
 
+const checkUser = async (req, res, next) => {
+    let user = null
+    const token = req.cookies.jwt
+
+    token
+        ? jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => { // token varsa cozumleniyor
+            err
+                ? (res.locals.user = null, next()) // token cozumlenirken hata olusursa local'de ki user null degerini aliyor 
+                : (user = await User.findById(decodedToken.userId), res.locals.user = user, next()) // db'den user bulunuyor ve local'de ki user'a esitleniyor
+        })
+        : (res.locals.user = null, next()) // token yoksa local'de ki user null degerini aliyor
+}
+
 export {
-    authenticateToken
+    authenticateToken, checkUser
 }
