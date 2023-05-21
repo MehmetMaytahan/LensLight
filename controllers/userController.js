@@ -30,17 +30,21 @@ const loginUser = async (req, res) => {
                 error: "There is no such user"
             })
 
-        same
-            ?
-            res.status(200).json({
-                user,
-                jwtToken: createToken(user._id)
+        if (same) {
+            const token = createToken(user._id) // token oluşturduk
+            res.cookie('jwt', token, { // oluşturduğumuz token'ı cookie'lerin içine yerleştiriyoruz 
+                httpOnly: true, // http isteklerinde bulunulabilmesi için true veriyoruz
+                maxAge: 1000 * 60 * 60 * 24 // token'ın ne kadar süre erişilebilir olacak onu ayarladık
             })
+            console.log(token);
+            res.status(200).redirect('/users/dashboard')
 
-            : res.status(401).json({
+        } else {
+            res.status(401).json({
                 succeded: false,
                 error: "Passwords are not matched"
             })
+        }
 
     } catch (error) {
         res.status(500).json({
@@ -56,6 +60,12 @@ const createToken = (userId) => {
     })
 }
 
+const getDashboardPage = (req, res) => {
+    res.render('dashboard', {
+        link: 'dashboard'
+    })
+}
+
 export {
-    createUser, loginUser
+    createUser, loginUser, getDashboardPage
 }

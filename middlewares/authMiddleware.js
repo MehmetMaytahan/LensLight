@@ -3,22 +3,20 @@ import User from '../models/UserModel.js'
 
 const authenticateToken = async (req, res, next) => {
     try {
-        const token = req.headers['authorization'] && req.headers['authorization'].split(' ')[1]
+        const token = req.cookies.jwt
 
-        !token
-            ? res.status(401).json({
-                succeded: false,
-                message: 'No token available'
+        token
+            ? jwt.verify(token, process.env.JWT_SECRET, (err) => {
+                err
+                    ? res.redirect('/login') // token'ı çözümlerken hata verirse login'e yönlendiriyor
+                    : next() // hata yoksa diğer işleme geciyor
             })
-            : next()
+            : res.redirect('/login') // token yoksa login'e yönlendiriyor
 
-        const verifyToken = jwt.verify(token, process.env.JWT_SECRET).userId
-
-        req.user = await User.findById(verifyToken)
     } catch (error) {
         res.status(401).json({
             succeded: false,
-            message: 'Not authorized'
+            message: 'Unauthorized'
         })
     }
 }

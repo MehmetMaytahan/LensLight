@@ -1,4 +1,5 @@
-import express, { urlencoded } from 'express'
+import express from 'express'
+import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 
 import { conn } from './db.js'
@@ -19,6 +20,7 @@ app.use(express.static('public'))
 // Middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })) // form icindeki verileri parse etmek icin kullaniyoruz.
+app.use(cookieParser())
 
 // Routes
 app.use('/', pageRoute)
