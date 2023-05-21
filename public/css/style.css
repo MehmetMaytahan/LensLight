@@ -277,6 +277,13 @@ button {
     text-align: right;
 }
 
+.text_align_right li a:hover {
+    color: #f6388e;
+}
+.text_align_right li a.active {
+    color: #f6388e;
+}
+
 .text_align_center {
     text-align: center;
 }
