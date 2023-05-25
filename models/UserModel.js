@@ -1,22 +1,26 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcrypt'
+import validator from "validator";
 
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
     username: {
         type: String,
-        required: true,
-        unique: true
+        required: [true, 'Username area is required'],
+        lowercase: true,
+        validate: [validator.isAlphanumeric, 'Only Alphanumeric characters']
     },
     password: {
         type: String,
-        required: true
+        required: [true, 'Password area is required'],
+        minLength: [4, ' At least 4 characters']
     },
     email: {
         type: String,
-        required: true,
-        unique: true
+        required: [true, 'Email area is required'],
+        unique: true,
+        validate: [validator.isEmail, 'Valid email is required ']
     }
 }, {
     timestamps: true

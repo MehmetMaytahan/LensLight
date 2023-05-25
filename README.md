@@ -7,3 +7,4 @@
     - Authentication ( Kimlik Doğrulama )
     - Authorization ( Yetkilendirme )
     - Cookie Parser
+    - Validator

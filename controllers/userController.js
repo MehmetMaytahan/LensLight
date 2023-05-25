@@ -7,10 +7,18 @@ const createUser = async (req, res) => {
         const user = await User.create(req.body)
         res.status(201).redirect('/login')
     } catch (error) {
-        res.status(500).json({
-            succeded: false,
-            error
-        })
+
+        let errors2 = {}
+
+        error.name === 'ValidationError'
+            ? Object.keys(error.errors).forEach((key) => {
+                errors2[key] = error.errors[key].message
+            })
+            : console.log('validation Error else blok :');
+
+        console.log('ERRORS2:::', errors2);
+
+        res.status(400).json(errors2)
     }
 }
 
