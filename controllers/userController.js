@@ -1,4 +1,5 @@
 import User from '../models/UserModel.js'
+import Photo from '../models/PhotoModel.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
@@ -65,8 +66,12 @@ const createToken = (userId) => {
     })
 }
 
-const getDashboardPage = (req, res) => {
+const getDashboardPage = async (req, res) => {
+    const photos = await Photo.find({
+        user: res.locals.user._id
+    })
     res.render('dashboard', {
+        photos,
         link: 'dashboard'
     })
 }
