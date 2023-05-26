@@ -5,7 +5,7 @@
    <body class="main-layout inner_page">
       <!-- loader  -->
       <div class="loader_bg">
-         <div class="loader"><img src="images/loading.gif" alt="#" /></div>
+         <div class="loader"><img src="/images/loading.gif" alt="#" /></div>
       </div>
       <!-- end loader -->
 
@@ -25,19 +25,33 @@
                   <div class="col-md-8 offset-md-2">
                      <form method="POST" action="users/register" id="request" class="main_form">
                         <div class="row">
+                           <!-- Username Area -->
                            <div class="col-md-12">
                               <input class="form_control" placeholder="Your Username" type="type" name="username">
                            </div>
+                           <!-- Alert Username -->
                            <div class="col-md-12">
-                              <input class="form_control" placeholder="Your Email" type="email" name="email">
+                              <div class="alert alert-danger" style="display: none;" id="username"></div>
                            </div>
+                           <!-- Email Area -->
+                           <div class="col-md-12">
+                              <input class="form_control" placeholder="Your Email" type="text" name="email">
+                           </div>
+                           <!-- Alert Email -->
+                           <div class="col-md-12">
+                              <div class="alert alert-danger" style="display: none;" id="email"></div>
+                           </div>
+                           <!-- Password Area -->
                            <div class="col-md-12">
                               <input class="form_control" placeholder="Your Password" type="password" name="password">
+                           </div>
+                           <!-- Alert Password -->
+                           <div class="col-md-12">
+                              <div class="alert alert-danger" style="display: none;" id="password"></div>
                            </div>
                            <div class="col-md-12">
                               <div class="group_form">
                                  <button class="send_btn">Register</button>
-                                 <!-- <button class="send_btn">Location</button> -->
                               </div>
                            </div>
                         </div>
@@ -46,6 +60,70 @@
                </div>
             </div>
          </div>
+         <!-- Scripts -->
+         <script>
+            const errorUsername = document.querySelector('#username')
+            const errorEmail = document.querySelector('#email')
+            const errorPassword = document.querySelector('#password')
+            const form = document.querySelector('form')
+
+            form.addEventListener('submit', async (e) => {
+               e.preventDefault()
+
+               errorUsername.textContent = ''
+               errorUsername.style.display = 'none'
+
+               errorEmail.textContent = ''
+               errorEmail.style.display = 'none'
+
+               errorPassword.textContent = ''
+               errorPassword.style.display = 'none'
+
+               const Username = form.username.value
+               const Email = form.email.value
+               const Password = form.password.value
+
+               try {
+                  const res = await fetch('users/register', {
+                     method: 'POST',
+                     body: JSON.stringify({ "username": Username, "email": Email, "password": Password }),
+                     headers: { "Content-Type": "application/json" }
+                  })
+
+                  const data = await res.json()
+
+                  console.log('DATA:: ', data);
+
+                  if (data) {
+                     if (data.username) {
+                        errorUsername.textContent = data.username
+                        errorUsername.style.display = 'block'
+                     }
+
+                     if (data.email) {
+                        errorEmail.textContent = data.email
+                        errorEmail.style.display = 'block'
+                     }
+
+                     if (data.password) {
+                        errorPassword.textContent = data.password
+                        errorPassword.style.display = 'block'
+                     }
+                  }
+
+                  if (data.user) {
+                     location.assign('/login')
+                  }
+
+               }
+               catch (error) {
+                  console.log('ERR::', error);
+               }
+
+            })
+
+
+         </script>
          <!-- end contact -->
          <!-- end footer -->
          <%- include('partials/_footer') %>

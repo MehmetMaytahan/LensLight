@@ -5,20 +5,20 @@ import jwt from 'jsonwebtoken'
 const createUser = async (req, res) => {
     try {
         const user = await User.create(req.body)
-        res.status(201).redirect('/login')
+        res.status(201).json({ user: user._id })
     } catch (error) {
 
-        let errors2 = {}
+        // catch blogundan gelen hatayi ozellestirmek icin yeni hata objesi olusturuyoruz 
+        let errors = {}
 
-        error.name === 'ValidationError'
-            ? Object.keys(error.errors).forEach((key) => {
-                errors2[key] = error.errors[key].message
-            })
-            : console.log('validation Error else blok :');
+        // ayni mail adresi ile kayit olmaya calistiginda bu sekilde yakaliyoruz
+        if (error.code === 11000) { errors.email = 'The Email is already registered' }
 
-        console.log('ERRORS2:::', errors2);
+        // girilen parametreler yanlis veya eksikse bura yakaliyor ve olusturdugumuz hata objesine kayit ediyoruz
+        if (error.name === "ValidationError") { Object.keys(error.errors).forEach(key => { errors[key] = error.errors[key].message }) }
 
-        res.status(400).json(errors2)
+        // ozellestirdigimiz hatayi geri donduruyoruz
+        res.status(400).json(errors)
     }
 }
 
