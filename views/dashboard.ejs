@@ -74,7 +74,7 @@
                             <% for( photo of photos){ %>
                                 <div class="col-lg-4 col-md-6 ma_bottom30">
                                     <div class="lightbox">
-                                        <img src="/images/g3.jpg" alt="Bridge">
+                                        <img src="<%= photo.url %>" alt="<%= photo.name %>">
                                         <div class="view_main">
                                             <div class="pose">
                                                 <a class="read_more" href="/photos/<%= photo._id %>"><img
@@ -100,8 +100,8 @@
             </div>
 
             <!-- ADD NEW FOTO MODAL -->
-            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-                aria-hidden="true">
+            <div class="modal fade bd-example-modal-lg" style="margin-top: px;" tabindex="-1" role="dialog"
+                aria-labelledby="myLargeModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -119,7 +119,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-10 offset-md-1">
-                                    <form id="request" class="main_form" method="POST" action="/photos">
+                                    <form id="request" class="main_form" method="POST" action="/photos"
+                                        enctype="multipart/form-data">
                                         <!-- enctype="multipart/form-data" -->
                                         <div class="row">
                                             <div class="col-md-12">
