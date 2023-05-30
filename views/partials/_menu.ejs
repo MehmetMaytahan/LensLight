@@ -15,13 +15,11 @@
                      <li><a class="<%= link == 'about' && 'active' %>" href="/about">About</a></li>
                      <li><a class="<%= link == 'photos' && 'active' %>" href="/photos">Photos</a></li>
                      <% if(user){ %>
+                        <li><a class="<%= link == 'users' && 'active' %>" href="/users">Users</a></li>
                         <li><a class="<%= link == 'dashboard' && 'active' %>" href="/users/dashboard">Dashboard</a></li>
-
                         <% } %>
                   </ul>
-                  <button class="nav-toggler">
-                     <span></span>
-                  </button>
+
                </nav>
             </div>
          </div>
@@ -35,6 +33,10 @@
                      <% } %>
             </ul>
          </div>
+
+         <button class="nav-toggler">
+            <span></span>
+         </button>
       </div>
    </div>
 </header>

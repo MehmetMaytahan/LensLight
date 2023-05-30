@@ -76,6 +76,29 @@ const getDashboardPage = async (req, res) => {
     })
 }
 
+const getAllUsers = async (req, res) => {
+    const users = await User.find({
+        _id: {
+            $ne: res.locals.user._id
+        }
+    })
+    res.status(200).render('users', {
+        link: 'users',
+        users
+    })
+}
+
+const getAUser = async (req, res) => {
+    const user = await User.findById(req.params.id)
+    const photos = await Photo.find({ user: user._id })
+
+    res.status(200).render('user', {
+        link: 'users',
+        user,
+        photos
+    })
+}
+
 export {
-    createUser, loginUser, getDashboardPage
+    createUser, loginUser, getDashboardPage, getAllUsers, getAUser
 }
