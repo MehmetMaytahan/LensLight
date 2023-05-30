@@ -70,6 +70,7 @@ const getDashboardPage = async (req, res) => {
     const photos = await Photo.find({
         user: res.locals.user._id
     })
+
     res.render('dashboard', {
         photos,
         link: 'dashboard'
@@ -90,15 +91,69 @@ const getAllUsers = async (req, res) => {
 
 const getAUser = async (req, res) => {
     const user = await User.findById(req.params.id)
-    const photos = await Photo.find({ user: user._id })
 
-    res.status(200).render('user', {
-        link: 'users',
-        user,
-        photos
+    const inFollower = user.followers.some(follower => {
+        return follower.equals(res.locals.user._id)
     })
+
+    if (user) {
+        const photos = await Photo.find({ user: user._id })
+
+        res.status(200).render('user', {
+            link: 'users',
+            user,
+            photos,
+            inFollower
+        })
+    } else {
+        res.status(204).redirect('/login')
+    }
+}
+
+const getFollow = async (req, res) => {
+
+    try {
+        let user = await User.findByIdAndUpdate(req.params.id,
+            {
+                $push: { followers: res.locals.user._id }
+            },
+            { new: true })
+
+        user = await User.findByIdAndUpdate({ _id: res.locals.user._id },
+            {
+                $push: { followings: req.params.id }
+            },
+            { new: true })
+        res.status(200).redirect(`/users/${req.params.id}`)
+    } catch (error) {
+
+    }
+
+
+}
+
+const getUnfollow = async (req, res) => {
+
+    try {
+        let user = await User.findByIdAndUpdate(req.params.id,
+            {
+                $pull: { followers: res.locals.user._id }
+            }, { new: true })
+
+        user = await User.findByIdAndUpdate(res.locals.user._id,
+            {
+                $pull: { followings: req.params.id }
+            }, { new: true })
+
+        res.status(200).redirect(`/users/${req.params.id}`)
+    } catch (error) {
+
+    }
+
+
+
 }
 
 export {
-    createUser, loginUser, getDashboardPage, getAllUsers, getAUser
+    createUser, loginUser, getDashboardPage, getAllUsers, getAUser, getFollow, getUnfollow
 }

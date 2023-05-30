@@ -21,7 +21,7 @@
                         <div class="col-md-12">
                             <div class="titlepage text_align_center">
                                 <h2>
-                                    <%= user.username %>
+                                    <%= user.username.toUpperCase() %>
                                 </h2>
                             </div>
                         </div>
@@ -53,13 +53,31 @@
             </div>
             <!-- customer end -->
 
+            <div class="row">
+                <div class="col-md-12 text_align_center">
+                    <% if (!inFollower) { %>
+                        <form action="/users/<%= user._id %>/follow" method="POST">
+                            <button style=" margin-top:100px; margin-left: 50%; transform: translateX(-50%);"
+                                class="read_more">Follow</button>
+                        </form>
+                        <% } else { %>
+                            <form action="/users/<%= user._id %>/unfollow" method="POST">
+                                <button style=" margin-top:100px; margin-left: 50%; transform: translateX(-50%);"
+                                    class="read_more">Unfollow</button>
+                            </form>
+                            <% } %>
+
+                </div>
+            </div>
+
             <div class="gallery">
                 <div class="container_with">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="titlepage text_align_center">
-                                <span>03</span>
-                                <h2>Our gallery</h2>
+                                <h2>
+                                    <%= user.username.toUpperCase() %>'s Gallery
+                                </h2>
                             </div>
                         </div>
                     </div>

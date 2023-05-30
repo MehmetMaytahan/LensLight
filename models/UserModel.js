@@ -21,7 +21,18 @@ const UserSchema = new Schema({
         required: [true, 'Email area is required'],
         unique: true,
         validate: [validator.isEmail, 'Valid email is required ']
-    }
+    },
+    followers: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
+    followings: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }]
 }, {
     timestamps: true
 })
