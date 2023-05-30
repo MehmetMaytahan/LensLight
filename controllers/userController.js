@@ -67,12 +67,12 @@ const createToken = (userId) => {
 }
 
 const getDashboardPage = async (req, res) => {
-    const photos = await Photo.find({
-        user: res.locals.user._id
-    })
+    const photos = await Photo.find({ user: res.locals.user._id })
+    const user = await User.findById({ _id: res.locals.user._id }).populate(["followers", "followings"])
 
     res.render('dashboard', {
         photos,
+        user,
         link: 'dashboard'
     })
 }
@@ -115,7 +115,7 @@ const getFollow = async (req, res) => {
     try {
         let user = await User.findByIdAndUpdate(req.params.id,
             {
-                $push: { followers: res.locals.user._id }
+                $push: { followers: res.locals.user._id } // $push ile mongoDB fonksiyonunu kullanarak dizi'ye ekleme yapiyoruz
             },
             { new: true })
 
@@ -137,7 +137,7 @@ const getUnfollow = async (req, res) => {
     try {
         let user = await User.findByIdAndUpdate(req.params.id,
             {
-                $pull: { followers: res.locals.user._id }
+                $pull: { followers: res.locals.user._id } // $pull ile mongoDB fonksiyonunu kullanarak dizi'den çıkarma yapiyoruz
             }, { new: true })
 
         user = await User.findByIdAndUpdate(res.locals.user._id,
