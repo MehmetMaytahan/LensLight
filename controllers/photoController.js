@@ -17,7 +17,8 @@ const createPhoto = async (req, res) => {
         await Photo.create({
             ...req.body,
             user: res.locals.user._id,
-            url: result.secure_url
+            url: result.secure_url,
+            imageId: result.public_id
         })
 
         fs.unlinkSync(req.files.image.tempFilePath)
@@ -62,6 +63,21 @@ const getAPhoto = async (req, res) => {
     }
 }
 
+const deletePhoto = async (req, res) => {
+    try {
+        const photo = await Photo.findById(req.params.id)
+        await cloudinary.uploader.destroy(photo.imageId)
+        await Photo.findOneAndRemove({ _id: photo._id })
+
+        res.status(200).redirect('/users/dashboard')
+    } catch (error) {
+        res.status(500).json({
+            succeded: false,
+            error
+        })
+    }
+}
+
 export {
-    createPhoto, getAllPhotos, getAPhoto
+    createPhoto, getAllPhotos, getAPhoto, deletePhoto
 }

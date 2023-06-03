@@ -20,7 +20,8 @@ const PhotoSchema = new Schema({
     url: {
         type: String,
         required: true
-    }
+    },
+    imageId: { type: String }
 
 }, {
     timestamps: true

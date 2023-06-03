@@ -10,6 +10,7 @@ import { checkUser } from './middlewares/authMiddleware.js'
 
 import fileUpload from 'express-fileupload'
 import { v2 as cloudinary } from 'cloudinary'
+import methodOverride from 'method-override'
 
 dotenv.config()
 cloudinary.config({
@@ -31,6 +32,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true })) // form icindeki verileri parse etmek icin kullaniyoruz.
 app.use(cookieParser())
 app.use(fileUpload({ useTempFiles: true }))
+app.use(methodOverride('_method', {
+    methods: ['POST', 'GET']
+}))
 
 // Routes
 app.use('*', checkUser)

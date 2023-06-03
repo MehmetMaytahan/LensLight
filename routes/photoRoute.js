@@ -8,5 +8,6 @@ router
     .get('/', photoController.getAllPhotos)
 
 router.get('/:id', photoController.getAPhoto)
+router.delete('/:id', photoController.deletePhoto)
 
 export default router;
