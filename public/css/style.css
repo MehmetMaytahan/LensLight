@@ -280,6 +280,7 @@ button {
 .text_align_right li a:hover {
     color: #f6388e;
 }
+
 .text_align_right li a.active {
     color: #f6388e;
 }
@@ -703,6 +704,12 @@ ul.email li i {
     background: #111111;
     color: #fff;
     transition: ease-in all 0.5s;
+}
+
+.edit {
+    display: flex;
+    padding: 25px 0px;
+    justify-content: space-between;
 }
 
 /** end gallery **/

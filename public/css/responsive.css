@@ -65,6 +65,15 @@ File Name: responsive.css
         font-size: 25px;
         line-height: 25px;
     }
+
+    .edit {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .edit a {
+        margin-bottom: 25px;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -123,6 +132,15 @@ File Name: responsive.css
 
     ul.social_icon li {
         padding: 0 7px;
+    }
+
+    .edit {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .edit a {
+        margin-bottom: 25px;
     }
 }
 
@@ -245,6 +263,15 @@ File Name: responsive.css
     .site-navbar ul.open {
         max-height: 100vh;
         overflow: visible;
+    }
+
+    .edit {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .edit a {
+        margin-bottom: 25px;
     }
 
     /* navbar css for mobile end */
