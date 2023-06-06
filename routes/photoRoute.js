@@ -9,5 +9,6 @@ router
 
 router.get('/:id', photoController.getAPhoto)
 router.delete('/:id', photoController.deletePhoto)
+router.put('/:id', photoController.updatePhoto)
 
 export default router;

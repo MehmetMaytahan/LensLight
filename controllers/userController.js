@@ -111,7 +111,6 @@ const getAUser = async (req, res) => {
 }
 
 const getFollow = async (req, res) => {
-
     try {
         let user = await User.findByIdAndUpdate(req.params.id,
             {
@@ -128,8 +127,6 @@ const getFollow = async (req, res) => {
     } catch (error) {
 
     }
-
-
 }
 
 const getUnfollow = async (req, res) => {
